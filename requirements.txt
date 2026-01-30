@@ -1,0 +1,8 @@
+flask
+flask-wtf
+wtforms
+flask-mysqldb
+mysqlclient
+bcrypt
+email-validator
+gunicorn

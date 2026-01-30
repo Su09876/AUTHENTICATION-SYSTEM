@@ -1,0 +1,45 @@
+{% extends 'app.html' %}
+{% block content %}
+
+<div class="page-wrapper">
+  <div class="auth-card">
+
+    <h2>Edit Profile</h2>
+
+    <form method="POST">
+      <div class="form-group">
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          value="{{ user[0] }}"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          value="{{ user[1] }}"
+          required
+        >
+      </div>
+
+      <button type="submit" class="btn btn-dark btn-block mt-3">
+        Save
+      </button>
+
+      <a href="{{ url_for('dashboard') }}"
+         class="btn btn-secondary btn-block mt-2">
+        Cancel
+      </a>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

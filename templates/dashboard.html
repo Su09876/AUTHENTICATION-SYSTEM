@@ -1,0 +1,40 @@
+{% extends 'app.html' %}
+{% block content %}
+
+<div class="page-wrapper">
+  <div class="dashboard-card text-center">
+
+    <h2>Dashboard</h2>
+
+    {% if user %}
+      <p><strong>Name:</strong> {{ user[1] }}</p>
+      <p><strong>Email:</strong> {{ user[2] }}</p>
+
+      <div class="dashboard-actions mt-4">
+        <a href="{{ url_for('edit_profile') }}" class="btn btn-info">
+          Edit Profile
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="btn btn-dark">
+          Logout
+        </a>
+
+        <form
+          action="{{ url_for('delete_account') }}"
+          method="POST"
+          style="display:inline;"
+        >
+          <button
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure?')"
+          >
+            Delete Account
+          </button>
+        </form>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
