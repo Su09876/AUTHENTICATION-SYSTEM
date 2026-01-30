@@ -5,11 +5,11 @@ from wtforms.validators import DataRequired, Email, ValidationError
 import bcrypt
 from flask_mysqldb import MySQL
 from flask import request
-
+import os
 
 app = Flask(__name__)
 
-import os
+
 
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
@@ -17,6 +17,9 @@ app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MYSQL_PORT']= int(os.getenv('MYSQL_PORT', 3306))
+
+print("MYSQL_HOST at startup ", os.getenv("MYSQL_HOST"))
+
 
 
 mysql = MySQL(app)
