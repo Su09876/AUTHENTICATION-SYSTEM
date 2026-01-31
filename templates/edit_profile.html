@@ -1,4 +1,4 @@
-{% extends 'app.html' %}
+{% extends "app.html" %}
 {% block content %}
 
 <div class="page-wrapper">
@@ -6,8 +6,20 @@
 
     <h2>Edit Profile</h2>
 
+    <!-- ✅ Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-success text-center">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- ✅ Edit Profile Form -->
     <form method="POST">
-      <div class="form-group">
+
+      <!-- Name -->
+      <div class="form-group mt-3">
         <label>Name</label>
         <input
           type="text"
@@ -18,7 +30,8 @@
         >
       </div>
 
-      <div class="form-group">
+      <!-- Email -->
+      <div class="form-group mt-3">
         <label>Email</label>
         <input
           type="email"
@@ -29,14 +42,22 @@
         >
       </div>
 
-      <button type="submit" class="btn btn-dark btn-block mt-3">
-        Save
-      </button>
+      <!-- Buttons -->
+      <div class="mt-4 text-center">
 
-      <a href="{{ url_for('dashboard') }}"
-         class="btn btn-secondary btn-block mt-2">
-        Cancel
-      </a>
+        <!-- Save Button -->
+        <button type="submit" class="btn btn-dark btn-block">
+          Save Changes
+        </button>
+
+        <!-- Cancel Button -->
+        <a href="{{ url_for('dashboard') }}"
+           class="btn btn-secondary btn-block mt-2">
+          Cancel
+        </a>
+
+      </div>
+
     </form>
 
   </div>

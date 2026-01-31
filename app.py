@@ -11,7 +11,8 @@ app = Flask(__name__)
 # ======================
 # CONFIG
 # ======================
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "my_default_secret")
+
 
 # ======================
 # DATABASE CONNECTION
@@ -146,12 +147,46 @@ def logout():
     return redirect(url_for("login"))
 
 
+from flask import Flask, render_template, redirect, url_for, session, flash, request
+# ✅ added request import
+
 @app.route("/edit-profile", methods=["GET", "POST"])
 def edit_profile():
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    return render_template("edit_profile.html")
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # ✅ Fetch current user info
+    cursor.execute(
+        "SELECT name, email FROM users WHERE id = %s",
+        (session["user_id"],)
+    )
+    user = cursor.fetchone()
+
+    # ✅ If form is submitted → Update profile
+    if request.method == "POST":
+        new_name = request.form["name"]
+        new_email = request.form["email"]
+
+        cursor.execute(
+            "UPDATE users SET name=%s, email=%s WHERE id=%s",
+            (new_name, new_email, session["user_id"])
+        )
+        conn.commit()
+
+        flash("Profile updated successfully!")
+        cursor.close()
+        conn.close()
+
+        return redirect(url_for("dashboard"))
+
+    cursor.close()
+    conn.close()
+
+    return render_template("edit_profile.html", user=user)
+
 
 
 @app.route("/delete-account", methods=["POST"])
