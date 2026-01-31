@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, session, flash
+from flask import Flask, render_template, redirect, url_for, session, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, ValidationError
@@ -147,9 +147,6 @@ def logout():
     return redirect(url_for("login"))
 
 
-from flask import Flask, render_template, redirect, url_for, session, flash, request
-# ✅ added request import
-
 @app.route("/edit-profile", methods=["GET", "POST"])
 def edit_profile():
     if "user_id" not in session:
@@ -158,14 +155,14 @@ def edit_profile():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # ✅ Fetch current user info
+    
     cursor.execute(
         "SELECT name, email FROM users WHERE id = %s",
         (session["user_id"],)
     )
     user = cursor.fetchone()
 
-    # ✅ If form is submitted → Update profile
+    
     if request.method == "POST":
         new_name = request.form["name"]
         new_email = request.form["email"]
@@ -185,7 +182,9 @@ def edit_profile():
     cursor.close()
     conn.close()
 
+    
     return render_template("edit_profile.html", user=user)
+
 
 
 
