@@ -1,4 +1,4 @@
-{% extends 'app.html' %}
+{% extends "app.html" %}
 {% block content %}
 
 <div class="page-wrapper">
@@ -11,26 +11,29 @@
       <p><strong>Email:</strong> {{ user[2] }}</p>
 
       <div class="dashboard-actions mt-4">
+
+        <!-- Edit Profile -->
         <a href="{{ url_for('edit_profile') }}" class="btn btn-info">
           Edit Profile
         </a>
 
+        <!-- Logout -->
         <a href="{{ url_for('logout') }}" class="btn btn-dark">
           Logout
         </a>
 
+        <!-- Delete Account -->
         <form
           action="{{ url_for('delete_account') }}"
           method="POST"
           style="display:inline;"
+          onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');"
         >
-          <button
-            class="btn btn-danger"
-            onclick="return confirm('Are you sure?')"
-          >
+          <button type="submit" class="btn btn-danger">
             Delete Account
           </button>
         </form>
+
       </div>
     {% endif %}
 

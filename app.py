@@ -146,6 +146,36 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/edit-profile", methods=["GET", "POST"])
+def edit_profile():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("edit_profile.html")
+
+
+@app.route("/delete-account", methods=["POST"])
+def delete_account():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    user_id = session["user_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "DELETE FROM users WHERE id = %s",
+        (user_id,)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    session.pop("user_id", None)
+    flash("Your account has been deleted.")
+    return redirect(url_for("index"))
+
+
 # ======================
 # RUN
 # ======================
