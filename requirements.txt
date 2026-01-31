@@ -1,8 +1,7 @@
 flask
 flask-wtf
 wtforms
-flask-mysqldb
-mysqlclient
+psycopg2-binary
 bcrypt
 email-validator
 gunicorn
