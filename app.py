@@ -18,8 +18,6 @@ app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MYSQL_PORT']= int(os.getenv('MYSQL_PORT', 3306))
 
-print("MYSQL_HOST at startup ", os.getenv("MYSQL_HOST"))
-
 
 
 mysql = MySQL(app)
